@@ -10,7 +10,7 @@ function rsync --description rsync
     end
     
     # TODO: add --protect-args option?
-    # TODO: add --fake-super option?
+    # TODO: add --fake-super and --xattrs options?
     command  rsync \
         --recursive \
         --links \
@@ -18,7 +18,6 @@ function rsync --description rsync
         --times \
         --acls \
         --perms \
-        --xattrs \
         --devices \
         --specials \
         --update \
