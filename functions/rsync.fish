@@ -1,8 +1,32 @@
 function rsync --description rsync
-    set exclude ''
-    if test -e $PWD/.gitignore
-        set exclude "--exclude-from=.gitignore"
+    set exclude '.DS_Store'
+    for arg in "$argv"
+        if test -d "$arg"
+            set result (git -C "$arg" ls-files --ignore --exclude-standard --others --directory ^/dev/null)
+            set exclude "$exclude "$result
+            # the source directory will always be before the destination
+            break
+        end
     end
-
-    command  rsync -ahuL --partial --info=progress2 --exclude=.git --exclude='.DS_Store' $exclude $argv
+    
+    # TODO: add --protect-args option?
+    command  rsync \
+        --recursive \
+        --links \
+        --hard-links \
+        --times \
+        --acls \
+        --perms \
+        --xattrs \
+        --devices \
+        --specials \
+        --update \
+        --partial \
+        --fake-super \
+        --no-inc-recursive \
+        --info=progress2 \
+        --human-readable \
+        --exclude-from=$HOME/.config/git/ignore \
+        --exclude=$exclude \
+        $argv
 end
