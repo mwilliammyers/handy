@@ -10,6 +10,7 @@ function rsync --description rsync
     end
     
     # TODO: add --protect-args option?
+    # TODO: add --fake-super option?
     command  rsync \
         --recursive \
         --links \
@@ -22,7 +23,6 @@ function rsync --description rsync
         --specials \
         --update \
         --partial \
-        --fake-super \
         --no-inc-recursive \
         --info=progress2 \
         --human-readable \
