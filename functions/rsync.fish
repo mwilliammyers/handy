@@ -1,17 +1,25 @@
 function rsync --description rsync
-    set exclude '.DS_Store'
+    set src_dir './'
     for arg in $argv
         if test -d $arg
-            set result (git -C $arg ls-files --ignore --exclude-standard --others --directory ^/dev/null)
-            set exclude "$exclude "$result
+            set src_dir $arg 
             # the source directory will always be before the destination
             break
         end
     end
-
+   
     # TODO: add --protect-args option?
     # TODO: add --fake-super option?
-    command  rsync \
+    
+    git \
+        -C $src_dir \
+        ls-files \
+        --ignore \
+        --exclude-standard \
+        --others \
+        --directory \
+        ^/dev/null \
+    | command rsync \
         --recursive \
         --links \
         --hard-links \
@@ -28,7 +36,7 @@ function rsync --description rsync
         --no-inc-recursive \
         --info=progress2 \
         --human-readable \
-        --exclude-from=$HOME/.config/git/ignore \
-        --exclude=$exclude \
+        --exclude=.DS_Store \
+        --exclude-from=- \
         $argv
 end
