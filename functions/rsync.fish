@@ -1,4 +1,9 @@
 function rsync --description rsync
+    if not status --is-interactive
+        command rsync $argv
+        return
+    end
+
     set src_dir './'
     for arg in $argv
         if test -d $arg
@@ -10,7 +15,7 @@ function rsync --description rsync
    
     # TODO: add --protect-args option?
     # TODO: add --fake-super option?
-    
+   
     git \
         -C $src_dir \
         ls-files \
