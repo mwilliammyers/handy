@@ -1,7 +1,5 @@
 # handy
 
-[![Slack Room][slack-badge]][slack-link]
-
 A collection of [fishshell] functions I find handy.
 
 ## Prerequisites
