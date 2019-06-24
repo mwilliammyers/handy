@@ -9,8 +9,8 @@ function ffx265
         # TODO: should we transcode to mp4 at the same time, or leave it as is?
         set -l out_path (string replace "$ext" "transcoded.mp4" "$path")
         
-        # TODO: use hevc_videotoolbox on macOS when available
-        # TODO: use hevc_nvenc when available
+        # TODO: use `-c:v hevc_videotoolbox` on macOS when available
+        # TODO: use `-c:v hevc_nvenc -hwaccel cuvid` when available
         ffmpeg \
             -i "$path" \
             -c:v libx265 -preset medium \
