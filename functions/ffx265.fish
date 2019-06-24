@@ -9,6 +9,11 @@ function ffx265
         # TODO: should we transcode to mp4 at the same time, or leave it as is?
         set -l out_path (string replace "$ext" "transcoded.mp4" "$path")
     
-        ffmpeg -i "$path" -c:v libx265 -preset medium -c:a copy "$out_path"
+        ffmpeg \
+            -i "$path" \
+            -c:v libx265 -preset medium \
+            -c:a copy \
+            -c:s copy -c:d copy -c:t copy \
+            "$out_path"
     end
 end
