@@ -25,6 +25,10 @@ function ffprobe -d "Run ffprobe"
 		end
 	end
 
+	# FIXME: for some reason this does not work
+	# string join0 "$files" | command xargs -P8 -0 -I'#' ffprobe '#' $ffprobe_args
+
+	# TODO: parallelize this with xargs
 	# do the files first so the user gets feedback faster
 	for file in $files
 		command ffprobe $ffprobe_args "$file"
