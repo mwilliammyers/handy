@@ -1,10 +1,4 @@
 function ffprobe -d "Run ffprobe"
-	argparse --name='ffprobe' 'h/help' -- $argv
-
-	set -q _flag_help
-	and command ffprobe --help $argv
-	and return 0
-
 	# -show_entries "format=filename,duration,format_name,size:stream=codec_name,height,width"
 	set -l ffprobe_args \
 		-v error \
@@ -20,6 +14,11 @@ function ffprobe -d "Run ffprobe"
 			set -a dirs $arg
 		else if test -f $arg
 			set -a files $arg
+		# TODO: handle $arg looking like an opt, e.g. `-v` without `^/dev/null`
+		# Don't use argparse because it gets confused with unknown opts
+		else if string match -qir '-h|--help' "$arg" ^/dev/null
+			command ffprobe $argv
+			and return 0
 		else
 			set -a ffprobe_args $arg
 		end
