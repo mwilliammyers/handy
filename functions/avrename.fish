@@ -1,4 +1,4 @@
-function av-rename
+function avrename
     
     for video_path in $argv
         # if ! test -f "$video_path"
