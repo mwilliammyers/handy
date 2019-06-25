@@ -25,17 +25,12 @@ function ffprobe -d "Run ffprobe"
 		end
 	end
 
-	printf "Running ffprobe, this could take a while...\n\n" 1>&2
-
-	set -l result
+	# do the files first so the user gets feedback faster
+	for file in $files
+		command ffprobe $ffprobe_args "$file"
+	end
 
 	if set -q dirs[1]
-		set -a result (fd -t f . $dirs -x ffprobe $ffprobe_args)
+		fd -t f . $dirs -x ffprobe $ffprobe_args
 	end
-
-	for file in $files
-		set -a result (command ffprobe $ffprobe_args "$file")
-	end
-
-	echo "$result" | jq -s '. | del(.[].programs)'
 end
