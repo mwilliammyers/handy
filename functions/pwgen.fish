@@ -1,4 +1,4 @@
-function pwgen -a pw_length -d "Generate a password"
+function pwgen -d "Generate a password"
 	argparse --name=pwgen 'h/help' 'N/num-passwords=' 'y/symbols' -- $argv
 	or return
 
@@ -12,7 +12,9 @@ function pwgen -a pw_length -d "Generate a password"
 		return 0
 	end
 
-	set -q pw_length; or set -l pw_length 20
+	set -l pw_length 20
+	test -n $argv[1]; and set -l pw_length $argv[1]
+
 	set -q _flag_N; or set -l _flag_N 1
 
 	set -l allowed_chars 'a-zA-Z0-9'
