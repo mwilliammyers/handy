@@ -1,5 +1,4 @@
-function es --argument url --description "Query Elasticsearch"
-
+function es --description "Query Elasticsearch" --argument url
     set -l db_url "$ES_URL"
 
     test -n "$db_url"
