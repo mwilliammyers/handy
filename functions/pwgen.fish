@@ -12,16 +12,20 @@ function pwgen -d "Generate a password"
 		return 0
 	end
 
-	set -l pw_length 20
+	set -l pw_length
 	test -n $argv[1]; and set -l pw_length $argv[1]
+	test -z pw_length; and set -l pw_length 20
 
 	set -q _flag_N; or set -l _flag_N 1
+
+	# set -l num_bytes (math "$_flag_N * $pw_length")
 
 	set -l allowed_chars 'a-zA-Z0-9'
 	# or @$!%*#?&'
 	set -l symbols '@#$%^&*()_+{}|:<>?='
-	set -q _flag_y; and set -l allowed_chars $symbols$allowed_chars
-
+	set -q _flag_y; and set -l allowed_chars "$symbols$allowed_chars"
+	
+	# TODO: estimate num_bytes?
 	set -x LC_ALL C
-	cat /dev/urandom | tr -dc $allowed_chars | fold -w $pw_length | head -n $_flag_N
+	dd if=/dev/urandom bs=1 count=32768 ^/dev/null | tr -dc $allowed_chars | fold -w $pw_length | head -n $_flag_N
 end
