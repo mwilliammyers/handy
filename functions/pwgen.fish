@@ -16,7 +16,7 @@ function pwgen -d "Generate a secure password"
         printf "Options:\n"
         printf "  -h/--help               Prints help and exits.\n"
         printf "  -N/--num-passwords=NUM  Generate [NUM] passwords (default: $default_pw_length).\n"
-        echo   "  -s/--symbols=STRING     Include specified symbols in addition to alphanumeric characters (default: $default_symbols)."
+        echo "  -s/--symbols=STRING     Include specified symbols in addition to alphanumeric characters (default: $default_symbols)."
 
         return 0
     end
@@ -33,11 +33,11 @@ function pwgen -d "Generate a secure password"
     test -z $num_pw
     and set num_pw $default_num_pw
 
-	set symbols $_flag_s
-	test -z $symbols
-	and set symbols $default_symbols
-	# TODO: allow setting characters explicitly?
-	set allowed_chars $symbols$default_allowed_chars
+    set symbols $_flag_s
+    test -z $symbols
+    and set symbols $default_symbols
+    # TODO: allow setting characters explicitly?
+    set allowed_chars $symbols$default_allowed_chars
 
     set num_blocks (math "round($num_blocks_scale * $num_pw)")
 
