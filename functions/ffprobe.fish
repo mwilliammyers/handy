@@ -24,16 +24,28 @@ function ffprobe -d "Run ffprobe"
 		end
 	end
 
+
 	# FIXME: for some reason this does not work
 	# string join0 "$files" | command xargs -P8 -0 -I'#' ffprobe '#' $ffprobe_args
 
 	# TODO: parallelize this with xargs
 	# do the files first so the user gets feedback faster
 	for file in $files
-		command ffprobe $ffprobe_args "$file"
+		__ffprobe $ffprobe_args "$file"
 	end
 
 	if set -q dirs[1]
-		fd -t f . $dirs -x ffprobe $ffprobe_args
+		for file in fd -t f . $dirs
+			__ffprobe $ffprobe_args
+		end
+	end
+end
+	
+function __ffprobe
+	if command -v ffprobe 
+		command ffprobe $argv
+	else
+		docker run -it --rm -v $PWD/:/tmp/ -w /tmp --entrypoint=ffprobe \
+			jrottenberg/ffmpeg:4.0-alpine $argv
 	end
 end
