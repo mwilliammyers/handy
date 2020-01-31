@@ -7,15 +7,15 @@ function rsync --description rsync
     set src_dir './'
     for arg in $argv
         if test -d $arg
-            set src_dir $arg 
+            set src_dir $arg
             # the source directory will always be before the destination
             break
         end
     end
-   
+
     # TODO: add --protect-args option?
     # TODO: add --fake-super option?
-   
+
     git \
         -C $src_dir \
         ls-files \
@@ -24,14 +24,11 @@ function rsync --description rsync
         --others \
         --directory \
         ^/dev/null \
-    | command rsync \
+        | command rsync \
         --recursive \
         --links \
         --hard-links \
         --times \
-        --owner \
-        --group \
-        --acls \
         --perms \
         --xattrs \
         --devices \
