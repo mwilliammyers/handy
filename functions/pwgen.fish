@@ -25,7 +25,7 @@ function pwgen -d "Generate a secure password"
     test -z $pw_length
     and set pw_length $default_pw_length
     if test $pw_length -lt $min_pw_length
-        echo "`PW_LENGTH` must be at least 8" ^&1
+        echo "`PW_LENGTH` must be at least 8" >&2
         return 1
     end
 
