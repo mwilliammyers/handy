@@ -12,10 +12,12 @@ function pwgen -d "Generate a secure password"
     or return
 
     if set -q _flag_help
-        printf "Usage: pwgen [OPTIONS] [PW_LENGTH]\n\n"
-        printf "Options:\n"
-        printf "  -h/--help               Prints help and exits.\n"
-        printf "  -N/--num-passwords=NUM  Generate [NUM] passwords (default: $default_pw_length).\n"
+        echo "Usage: pwgen [OPTIONS] [PW_LENGTH]"
+        echo ""
+        echo "Options:"
+        echo "  -h/--help               Prints help and exits."
+        echo "  -N/--num-passwords=NUM  Generate [NUM] passwords (default: $default_num_pw)."
+        # This cannot use printf
         echo "  -s/--symbols=STRING     Include specified symbols in addition to alphanumeric characters (default: $default_symbols)."
 
         return 0
