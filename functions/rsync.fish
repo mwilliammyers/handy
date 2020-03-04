@@ -12,19 +12,9 @@ function rsync --description rsync
             break
         end
     end
-
-    # TODO: add --protect-args option?
-    # TODO: add --fake-super option?
-
-    git \
-        -C $src_dir \
-        ls-files \
-        --ignore \
-        --exclude-standard \
-        --others \
-        --directory \
-        ^/dev/null \
-        | command rsync \
+    
+    # --no-inc-recursive \
+    set args "\
         --recursive \
         --links \
         --hard-links \
@@ -35,10 +25,19 @@ function rsync --description rsync
         --specials \
         --update \
         --partial \
-        --no-inc-recursive \
         --info=progress2 \
         --human-readable \
         --exclude=.DS_Store \
         --exclude-from=- \
-        $argv
+        $argv \
+    "
+
+    for file in ~/.gitignore ~/.config/git/ignore
+        if test -f $file
+            set args " --exclude-from=$file $args"
+        end
+    end
+
+    git -C $src_dir ls-files -io --exclude-standard --directory ^/dev/null \
+        | eval command rsync $args
 end
