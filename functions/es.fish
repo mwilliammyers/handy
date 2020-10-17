@@ -1,13 +1,18 @@
-function es --description "Query Elasticsearch" --argument url
-    set -l db_url "$ES_URL"
+function es --description "Query Elasticsearch" --argument endpoint
+    test -n "$ES_URL"
+    or set -l ES_URL "http://127.0.0.1:9200"
+    
+    test -n "$ES_USER"
+    or set -l ES_USER elastic
 
-    test -n "$db_url"
-    or set -l db_url "http://127.0.0.1:9200"
+    test -n "$ES_PASSWORD"
+    and set -l auth_args --insecure --user "$ES_USER:$ES_PASSWORD"
 
-    command curl -sS \
+    command curl --silent --show-error \
         -H 'Content-Type: application/json' \
         -H 'Accept: application/json' \
-        "$db_url/$url" \
+        $auth_args \
+        "$ES_URL/$endpoint" \
         $argv[2..-1] \
         | jq
 end
