@@ -11,7 +11,7 @@ A collection of [fishshell] functions I find handy.
 With [`fisher`]:
 
 ```
-fisher add mwilliammyers/handy
+fisher install mwilliammyers/handy
 ```
 
 
