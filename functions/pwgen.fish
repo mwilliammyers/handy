@@ -23,7 +23,7 @@ function pwgen -d "Generate a secure password"
         return 0
     end
 
-    set pw_length $argv[1]
+    set pw_length (math $argv[1] + 1)
     test -z $pw_length
     and set pw_length $default_pw_length
     if test $pw_length -lt $min_pw_length
@@ -51,7 +51,7 @@ function pwgen -d "Generate a secure password"
 
     # `cat` was causing issues for some reason, so use `dd`
     set -x LC_ALL C
-    dd if=/dev/urandom bs=$block_size count=$num_blocks ^/dev/null \
+    dd if=/dev/urandom bs=$block_size count=$num_blocks 2>/dev/null \
         | tr -dc $allowed_chars \
         | fold -w (math "$pw_length - 1") \
         | head -n $num_pw
