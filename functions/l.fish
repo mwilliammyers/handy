@@ -1,4 +1,4 @@
 function l
-	exa --color=always $argv
+	eza --color=always $argv
 end
 
