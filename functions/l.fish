@@ -1,4 +1,4 @@
 function l
-	eza --color=always --hyperlink $argv
+	eza --color=always --hyperlink=auto $argv
 end
 

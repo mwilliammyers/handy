@@ -1,4 +1,4 @@
 function ll --description "List contents of directory using long format"
-	eza --long --group --modified --git --time-style=iso --hyperlink $argv
+	eza --long --group --modified --git --time-style=iso --hyperlink=auto $argv
 end
 
